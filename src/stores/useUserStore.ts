@@ -9,13 +9,16 @@ type UserState = {
   fullname: string
   phone: string
   email: string
+  oath: boolean
 }
 
 type UserStoreState = {
   tryLocalSignin: () => void
   signup: (values: { fullname: string }) => void
   login: (email: string, password: string) => void
+  verify: (values: { token: string }) => void
   loadUser: () => void
+  updateUser: (values: any) => void
   logout: () => void
   token?: string
   user?: UserState
@@ -72,7 +75,25 @@ const useUserStore = create<UserStoreState>((set, get) => ({
 
       await AsyncStorage.setItem('token', token)
 
-      set({ token, user })
+      if (user?.oath) {
+        set({ user })
+
+        navigate('Verify')
+      } else {
+        set({ token, user })
+      }
+    } catch (err) {
+      Toast.show({ text: err.message })
+    }
+  },
+
+  verify: async (values) => {
+    try {
+      await api.post('/v1/auth/verify', { data: values })
+
+      const token = await AsyncStorage.getItem('token')
+
+      if (token) set({ token })
     } catch (err) {
       Toast.show({ text: err.message })
     }
@@ -85,6 +106,16 @@ const useUserStore = create<UserStoreState>((set, get) => ({
       set({ user: res.data })
     } catch (err) {
       Toast.show({ text: 'Сoudn&#39;t load the user' })
+    }
+  },
+
+  updateUser: async (values) => {
+    try {
+      const res = await api.post('/v1/user', { data: values })
+
+      set({ user: res.data })
+    } catch (err) {
+      Toast.show({ text: err.message })
     }
   },
 

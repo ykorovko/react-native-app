@@ -25,7 +25,12 @@ const schema = yup.object().shape({
   phone: yup.string().required(),
   email: yup.string().email().required(),
   password: yup.string().min(6).required(),
-  passwordConfirm: yup.string()
+  passwordConfirm: yup
+    .string()
+    .min(6)
+    .test('passwords-match', 'Passwords must match', function (value) {
+      return this.parent.password === value
+    })
 })
 
 const Signup: React.FC<Props> = ({ navigation }) => {
@@ -86,8 +91,7 @@ const Signup: React.FC<Props> = ({ navigation }) => {
           placeholder="Your email"
           control={control}
           inputProps={{
-            secureTextEntry: true,
-            textContentType: 'password'
+            textContentType: 'emailAddress'
           }}
         />
       </Grid>

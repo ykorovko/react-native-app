@@ -1,13 +1,18 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Switch } from 'react-native-gesture-handler'
 
 import Button from '../components/Button'
+import Switch from '../components/Switch'
 import useUserStore from '../stores/useUserStore'
 import { Container, Grid, Label, Title } from '../styled'
+import theme from '../theme'
 
 const More: React.FC = () => {
-  const { user, logout } = useUserStore()
+  const { user, updateUser, logout } = useUserStore()
+
+  const handleSwitch = React.useCallback((value) => {
+    updateUser({ oath: value })
+  }, [])
 
   return (
     <Container>
@@ -33,13 +38,7 @@ const More: React.FC = () => {
       <View style={styles.listItem}>
         <Label>2 Factor Auth</Label>
 
-        <Switch
-          // trackColor={{ false: '#767577', true: '#81b0ff' }}
-          // thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
-          // onValueChange={toggleSwitch}
-          // value={isEnabled}
-        />
+        <Switch value={!!user?.oath} onValueChange={handleSwitch} />
       </View>
 
       {/* <View style={styles.listItem}>
@@ -59,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 24,
     borderBottomWidth: 1,
-    borderColor: '#ccc'
+    borderColor: theme.palette?.borderColor
   }
 })
 
