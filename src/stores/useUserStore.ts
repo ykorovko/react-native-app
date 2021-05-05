@@ -15,6 +15,7 @@ type UserStoreState = {
   tryLocalSignin: () => void
   signup: (values: { fullname: string }) => void
   login: (email: string, password: string) => void
+  loadUser: () => void
   logout: () => void
   token?: string
   user?: UserState
@@ -22,16 +23,21 @@ type UserStoreState = {
   error?: string
 }
 
-const useUserStore = create<UserStoreState>((set) => ({
+const useUserStore = create<UserStoreState>((set, get) => ({
   tryLocalSignin: async () => {
-    const token = await AsyncStorage.getItem('token')
+    try {
+      const token = await AsyncStorage.getItem('token')
+      await get().loadUser()
 
-    if (token) {
-      set({ token })
+      if (token) {
+        set({ token })
 
-      navigate('Home')
-    } else {
-      navigate('Root')
+        navigate('Home')
+      } else {
+        navigate('Root')
+      }
+    } catch (err) {
+      Toast.show({ text: 'Auth error' })
     }
   },
 
@@ -69,6 +75,16 @@ const useUserStore = create<UserStoreState>((set) => ({
       set({ token, user })
     } catch (err) {
       Toast.show({ text: err.message })
+    }
+  },
+
+  loadUser: async () => {
+    try {
+      const res = await api.get('/v1/user')
+
+      set({ user: res.data })
+    } catch (err) {
+      Toast.show({ text: 'Сoudn&#39;t load the user' })
     }
   },
 
