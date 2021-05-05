@@ -12,13 +12,12 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaFeatures: {
-      jsx: true
-    },
+    ecmaFeatures: { jsx: true },
     ecmaVersion: 12,
     sourceType: 'module'
   },
   plugins: [
+    'import',
     'react',
     '@typescript-eslint',
     'prettier',
@@ -27,18 +26,27 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': 'error',
-    indent: ['error', 2],
+    indent: ['error', 2, { SwitchCase: 1 }],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'never'],
     'no-empty-function': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     'react/display-name': 'off',
-    'react/prop-types': 'off'
+    'react/prop-types': 'off',
+
+    // Import
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling'],
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true
+        }
+      }
+    ]
   },
-  settings: {
-    react: {
-      version: 'detect'
-    }
-  }
+  settings: { react: { version: 'detect' } }
 }
