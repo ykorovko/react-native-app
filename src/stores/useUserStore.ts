@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Toast } from 'native-base'
 import create from 'zustand'
 
 import api from '../api'
 import { navigate } from '../navigationRef'
+import Toaster from '../utils/Toaster'
 
 type UserState = {
   fullname: string
@@ -40,7 +40,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
         navigate('Root')
       }
     } catch (err) {
-      Toast.show({ text: 'Auth error' })
+      Toaster.error('Auth error')
     }
   },
 
@@ -55,9 +55,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
 
       set({ token, user })
     } catch (err) {
-      console.error(err)
-
-      Toast.show({ text: err.message })
+      Toaster.error(err.message)
 
       return Promise.reject(err)
     }
@@ -83,7 +81,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
         set({ token, user })
       }
     } catch (err) {
-      Toast.show({ text: err.message })
+      Toaster.error(err.message)
     }
   },
 
@@ -95,7 +93,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
 
       if (token) set({ token })
     } catch (err) {
-      Toast.show({ text: err.message })
+      Toaster.error(err.message)
     }
   },
 
@@ -105,7 +103,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
 
       set({ user: res.data })
     } catch (err) {
-      Toast.show({ text: 'Сoudn&#39;t load the user' })
+      Toaster.error('Сoudn&#39;t load the user')
     }
   },
 
@@ -115,7 +113,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
 
       set({ user: res.data })
     } catch (err) {
-      Toast.show({ text: err.message })
+      Toaster.error(err.message)
     }
   },
 
@@ -125,7 +123,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
 
       set({ token: undefined, user: undefined })
     } catch (err) {
-      Toast.show({ text: err.message })
+      Toaster.error(err.message)
     }
   }
 }))
