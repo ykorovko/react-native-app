@@ -8,7 +8,6 @@ type TextProps = {
 
 export const Container = styled.View({
   flex: 1,
-  backgroundColor: '#fff',
   paddingHorizontal: 15
 })
 

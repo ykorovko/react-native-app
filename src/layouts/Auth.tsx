@@ -10,7 +10,8 @@ const AuthLayout: React.FC = ({ children }) => {
         paddingTop: 50,
         alignItems: 'center',
         justifyContent: 'center'
-      }}>
+      }}
+    >
       {children}
     </View>
   )

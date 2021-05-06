@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import Button from '../components/Button'
+import FadeInView from '../components/FadeInView'
 import TextField from '../components/TextField'
 import useUserStore from '../stores/useUserStore'
 import { ContainerCentered, Grid, Title } from '../styled'
@@ -36,41 +37,43 @@ const Signin: React.FC<Props> = () => {
   }, [])
 
   return (
-    <ContainerCentered>
-      <Title>Signin</Title>
+    <FadeInView>
+      <ContainerCentered>
+        <Title>Signin</Title>
 
-      <Grid spacing={1}>
-        <TextField
-          name="email"
-          placeholder="Your email"
-          control={control}
-          inputProps={{
-            textContentType: 'emailAddress'
-          }}
-        />
-      </Grid>
+        <Grid spacing={1}>
+          <TextField
+            name="email"
+            label="Your email"
+            control={control}
+            inputProps={{
+              textContentType: 'emailAddress'
+            }}
+          />
+        </Grid>
 
-      <Grid spacing={1}>
-        <TextField
-          name="password"
-          placeholder="Your password"
-          control={control}
-          inputProps={{
-            secureTextEntry: true,
-            textContentType: 'password'
-          }}
-        />
-      </Grid>
+        <Grid spacing={1}>
+          <TextField
+            name="password"
+            label="Your password"
+            control={control}
+            inputProps={{
+              secureTextEntry: true,
+              textContentType: 'password'
+            }}
+          />
+        </Grid>
 
-      <Grid spacing={1}>
-        <Button
-          title="Submit"
-          variant="accent"
-          loading={formState.isSubmitting}
-          onPress={handleSubmit(onSubmit)}
-        />
-      </Grid>
-    </ContainerCentered>
+        <Grid spacing={1}>
+          <Button
+            title="Submit"
+            variant="accent"
+            loading={formState.isSubmitting}
+            onPress={handleSubmit(onSubmit)}
+          />
+        </Grid>
+      </ContainerCentered>
+    </FadeInView>
   )
 }
 

@@ -34,7 +34,7 @@ const Verify: React.FC = () => {
       <Title>Enter the code</Title>
 
       <Grid spacing={1}>
-        <TextField name="token" placeholder="Code" control={control} />
+        <TextField name="token" label="Code" control={control} />
       </Grid>
 
       <Grid spacing={1}>

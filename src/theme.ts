@@ -8,7 +8,8 @@ const theme: Partial<Theme> = {
     positive: '',
     negative: 'tomato',
     disabled: '#e9ecef',
-    borderColor: '#e9ecef',
+    borderColor: '#dee2e6',
+    background: '#f8f9fa',
 
     // Common
     white: '#fff'

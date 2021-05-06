@@ -1,49 +1,143 @@
 import React from 'react'
 import {
-  SafeAreaView,
+  NativeSyntheticEvent,
+  TargetedEvent,
   StyleSheet,
-  TextInput as RNTextInput
+  TextInput as RNTextInput,
+  TextInputFocusEventData,
+  Animated
 } from 'react-native'
-
-import theme from '../theme'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 type Props = {
+  label: string
   value: string
   onChangeText: () => void
-  placeholder?: string
   inputProps?: { [key: string]: any }
-  onBlur?: () => void
+  onFocus?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void
+  onBlur?: (e: NativeSyntheticEvent<TargetedEvent>) => void
 }
 
 const TextInput: React.FC<Props> = ({
-  placeholder,
+  label,
   value,
   onChangeText,
+  inputProps,
   onBlur,
-  inputProps
+  onFocus
 }) => {
+  const [isFocused, setFocused] = React.useState(false)
+
+  const inputRef = React.useRef()
+
+  const animatedOpacity = React.useRef(new Animated.Value(0)).current
+  const animatedTop = React.useRef(new Animated.Value(30)).current
+
+  const withLabel = isFocused || !!value
+
+  React.useEffect(() => {}, [])
+
+  const handleFocus = React.useCallback(
+    (event) => {
+      Animated.timing(animatedOpacity, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: false,
+        isInteraction: true
+      }).start()
+
+      Animated.timing(animatedTop, {
+        toValue: 10,
+        duration: 100,
+        useNativeDriver: false,
+        isInteraction: true
+      }).start()
+
+      setFocused(true)
+
+      if (onFocus) onFocus(event)
+    },
+    [withLabel, animatedOpacity, animatedTop]
+  )
+
+  const handleBlur = React.useCallback(
+    (event) => {
+      if (!value) {
+        Animated.timing(animatedOpacity, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: false,
+          isInteraction: true
+        }).start()
+
+        setFocused(false)
+      }
+
+      if (onBlur) onBlur(event)
+    },
+    [value, animatedOpacity]
+  )
+
+  const placeholder = !isFocused ? label : ''
+
   return (
-    <SafeAreaView>
+    <TouchableOpacity
+      style={[s.container, withLabel ? s.focused : {}]}
+      onPress={() => (inputRef as any).current.focus()}
+    >
+      <Animated.Text
+        style={{
+          ...s.label,
+          top: animatedTop,
+          opacity: animatedOpacity
+        }}
+      >
+        {label}
+      </Animated.Text>
+
       <RNTextInput
-        style={styles.input}
+        ref={inputRef}
+        style={[s.input, isFocused ? s.inputFocused : {}]}
         placeholder={placeholder}
         value={value}
-        onChangeText={onChangeText}
-        onBlur={onBlur}
         autoCapitalize="none"
+        underlineColorAndroid="transparent"
+        onChangeText={onChangeText}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         {...inputProps}
       />
-    </SafeAreaView>
+    </TouchableOpacity>
   )
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
+  container: {
+    position: 'relative',
+    backgroundColor: '#e9ecef',
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    paddingVertical: 25
+  },
+
+  focused: {
+    backgroundColor: '#fff'
+  },
+
+  label: {
+    position: 'absolute',
+    left: 15,
+    fontSize: 16
+  },
+
   input: {
     minWidth: '100%',
-    fontSize: 20,
-    padding: 16,
-    borderRadius: 4,
-    backgroundColor: theme.palette?.disabled
+    fontSize: 20
+  },
+
+  inputFocused: {
+    marginTop: 10,
+    marginBottom: -10
   }
 })
 

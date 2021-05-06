@@ -10,6 +10,7 @@ declare module '@emotion/react' {
       negative: string
       disabled: string
       borderColor: string
+      background: string
 
       white: string
     }

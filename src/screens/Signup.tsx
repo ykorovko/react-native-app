@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import Button from '../components/Button'
+import FadeInView from '../components/FadeInView'
 import TextField from '../components/TextField'
 import useUserStore from '../stores/useUserStore'
 import { ContainerCentered, Grid, Title } from '../styled'
@@ -60,74 +61,76 @@ const Signup: React.FC<Props> = ({ navigation }) => {
   }, [])
 
   return (
-    <ContainerCentered>
-      <Title>Signup</Title>
+    <FadeInView>
+      <ContainerCentered>
+        <Title>Signup</Title>
 
-      <Grid spacing={1}>
-        <TextField
-          name="fullname"
-          placeholder="Your fullname"
-          control={control}
-          inputProps={{
-            textContentType: 'name'
-          }}
-        />
-      </Grid>
+        <Grid spacing={1}>
+          <TextField
+            name="fullname"
+            label="Your fullname"
+            control={control}
+            inputProps={{
+              textContentType: 'name'
+            }}
+          />
+        </Grid>
 
-      <Grid spacing={1}>
-        <TextField
-          name="phone"
-          placeholder="Your phone"
-          control={control}
-          inputProps={{
-            textContentType: 'telephoneNumber'
-          }}
-        />
-      </Grid>
+        <Grid spacing={1}>
+          <TextField
+            name="phone"
+            label="Your phone"
+            control={control}
+            inputProps={{
+              textContentType: 'telephoneNumber'
+            }}
+          />
+        </Grid>
 
-      <Grid spacing={1}>
-        <TextField
-          name="email"
-          placeholder="Your email"
-          control={control}
-          inputProps={{
-            textContentType: 'emailAddress'
-          }}
-        />
-      </Grid>
+        <Grid spacing={1}>
+          <TextField
+            name="email"
+            label="Your email"
+            control={control}
+            inputProps={{
+              textContentType: 'emailAddress'
+            }}
+          />
+        </Grid>
 
-      <Grid spacing={1}>
-        <TextField
-          name="password"
-          placeholder="Your password"
-          control={control}
-          inputProps={{
-            secureTextEntry: true,
-            textContentType: 'password'
-          }}
-        />
-      </Grid>
+        <Grid spacing={1}>
+          <TextField
+            name="password"
+            label="Your password"
+            control={control}
+            inputProps={{
+              secureTextEntry: true,
+              textContentType: 'password'
+            }}
+          />
+        </Grid>
 
-      <Grid spacing={1}>
-        <TextField
-          name="passwordConfirm"
-          placeholder="Confirm your password"
-          control={control}
-          inputProps={{
-            secureTextEntry: true
-          }}
-        />
-      </Grid>
+        <Grid spacing={1}>
+          <TextField
+            name="passwordConfirm"
+            label="Confirm your password"
+            control={control}
+            inputProps={{
+              secureTextEntry: true
+            }}
+          />
+        </Grid>
 
-      <Grid spacing={1}>
-        <Button
-          title="submit"
-          variant="accent"
-          loading={formState.isSubmitting}
-          onPress={handleSubmit(onSubmit)}
-        />
-      </Grid>
-    </ContainerCentered>
+        <Grid spacing={1}>
+          <Button
+            title="submit"
+            variant="accent"
+            loading={formState.isSubmitting}
+            onPress={handleSubmit(onSubmit)}
+          />
+        </Grid>
+      </ContainerCentered>
+    </FadeInView>
   )
 }
 

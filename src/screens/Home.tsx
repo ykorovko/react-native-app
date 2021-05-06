@@ -81,7 +81,7 @@ const s = StyleSheet.create({
 
   tabContent: {
     flex: 1,
-    backgroundColor: '#e9ecef'
+    backgroundColor: theme.palette?.background
   }
 })
 

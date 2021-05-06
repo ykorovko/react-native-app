@@ -40,7 +40,7 @@ export default function App() {
         <View
           style={{
             flex: 1,
-            backgroundColor: '#fff',
+            backgroundColor: theme.palette?.background,
             paddingTop: 50
           }}
         >

@@ -36,6 +36,7 @@ const HomeStack: React.FC = () => {
         activeTintColor: theme.palette.accent,
         inactiveTintColor: 'gray'
       }}
+      sceneContainerStyle={{ backgroundColor: theme.palette.background }}
       screenOptions={({ route }) => ({
         size: 30,
         tabBarIcon: ({ color, size }) => {

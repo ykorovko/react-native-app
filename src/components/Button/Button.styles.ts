@@ -8,9 +8,9 @@ export const buttonStyles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     minHeight: 50,
-    paddingVertical: 16,
+    paddingVertical: 20,
     borderWidth: 1,
-    borderRadius: 4,
+    borderRadius: 8,
     marginBottom: 8
   },
 
@@ -23,7 +23,8 @@ export const buttonStyles = StyleSheet.create({
   },
 
   primary: {
-    borderColor: theme.palette?.primary
+    borderColor: theme.palette?.primary,
+    backgroundColor: '#fff'
   },
 
   contained: {

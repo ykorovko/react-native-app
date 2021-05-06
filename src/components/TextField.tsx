@@ -2,11 +2,13 @@ import React from 'react'
 import { useController } from 'react-hook-form'
 import { StyleSheet, Text } from 'react-native'
 
+import theme from '../theme'
+
 import TextInput from './TextInput'
 
 type Props = {
   name: string
-  placeholder: string
+  label: string
   control: any
   inputProps?: { [key: string]: any }
 }
@@ -15,7 +17,7 @@ type AllProps = Props
 
 const TextField: React.FC<AllProps> = ({
   name,
-  placeholder,
+  label,
   control,
   inputProps
 }) => {
@@ -34,21 +36,22 @@ const TextField: React.FC<AllProps> = ({
     <>
       <TextInput
         value={field.value}
-        placeholder={placeholder}
+        label={label}
         onChangeText={field.onChange}
         onBlur={field.onBlur}
         inputProps={inputProps}
       />
 
-      {error && <Text style={styles.error}>{error.message}</Text>}
+      {error && <Text style={s.error}>{error.message}</Text>}
     </>
   )
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   error: {
     fontSize: 16,
-    color: 'red'
+    color: theme.palette?.negative,
+    marginTop: 5
   }
 })
 
