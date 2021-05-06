@@ -33,7 +33,7 @@ const TransactionsList: React.FC<Props> = ({ loading, loaded, data }) => {
               />
             </SkeletonPlaceholder>
           ) : (
-            <TextStyled>{format(date, 'dd.MM.yyyy')}</TextStyled>
+            <TextStyled>{format(date, 'MM.yyyy')}</TextStyled>
           )}
         </View>
       )}
