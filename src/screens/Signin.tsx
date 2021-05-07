@@ -6,6 +6,7 @@ import * as yup from 'yup'
 
 import Button from '../components/Button'
 import FadeInView from '../components/FadeInView'
+import PasswordField from '../components/PasswordField'
 import TextField from '../components/TextField'
 import useUserStore from '../stores/useUserStore'
 import { ContainerCentered, Grid, Title } from '../styled'
@@ -53,14 +54,10 @@ const Signin: React.FC<Props> = () => {
         </Grid>
 
         <Grid spacing={1}>
-          <TextField
+          <PasswordField
             name="password"
             label="Your password"
             control={control}
-            inputProps={{
-              secureTextEntry: true,
-              textContentType: 'password'
-            }}
           />
         </Grid>
 

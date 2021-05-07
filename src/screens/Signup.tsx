@@ -6,6 +6,7 @@ import * as yup from 'yup'
 
 import Button from '../components/Button'
 import FadeInView from '../components/FadeInView'
+import PasswordField from '../components/PasswordField'
 import TextField from '../components/TextField'
 import useUserStore from '../stores/useUserStore'
 import { ContainerCentered, Grid, Title } from '../styled'
@@ -99,25 +100,18 @@ const Signup: React.FC<Props> = ({ navigation }) => {
         </Grid>
 
         <Grid spacing={1}>
-          <TextField
+          <PasswordField
             name="password"
             label="Your password"
             control={control}
-            inputProps={{
-              secureTextEntry: true,
-              textContentType: 'password'
-            }}
           />
         </Grid>
 
         <Grid spacing={1}>
-          <TextField
+          <PasswordField
             name="passwordConfirm"
             label="Confirm your password"
             control={control}
-            inputProps={{
-              secureTextEntry: true
-            }}
           />
         </Grid>
 

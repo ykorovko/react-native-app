@@ -5,7 +5,8 @@ import {
   StyleSheet,
   TextInput as RNTextInput,
   TextInputFocusEventData,
-  Animated
+  Animated,
+  View
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
@@ -14,6 +15,7 @@ type Props = {
   value: string
   onChangeText: () => void
   inputProps?: { [key: string]: any }
+  endAdornment?: JSX.Element
   onFocus?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void
   onBlur?: (e: NativeSyntheticEvent<TargetedEvent>) => void
 }
@@ -23,6 +25,7 @@ const TextInput: React.FC<Props> = ({
   value,
   onChangeText,
   inputProps,
+  endAdornment,
   onBlur,
   onFocus
 }) => {
@@ -81,39 +84,49 @@ const TextInput: React.FC<Props> = ({
   const placeholder = !isFocused ? label : ''
 
   return (
-    <TouchableOpacity
-      style={[s.container, withLabel ? s.focused : {}]}
-      onPress={() => (inputRef as any).current.focus()}
-    >
-      <Animated.Text
-        style={{
-          ...s.label,
-          top: animatedTop,
-          opacity: animatedOpacity
-        }}
+    <View style={s.container}>
+      <TouchableOpacity
+        style={[s.wrapper, withLabel ? s.focused : {}]}
+        onPress={() => (inputRef as any).current.focus()}
       >
-        {label}
-      </Animated.Text>
+        <Animated.Text
+          style={{
+            ...s.label,
+            top: animatedTop,
+            opacity: animatedOpacity
+          }}
+        >
+          {label}
+        </Animated.Text>
 
-      <RNTextInput
-        ref={inputRef}
-        style={[s.input, isFocused ? s.inputFocused : {}]}
-        placeholder={placeholder}
-        value={value}
-        autoCapitalize="none"
-        underlineColorAndroid="transparent"
-        onChangeText={onChangeText}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        {...inputProps}
-      />
-    </TouchableOpacity>
+        <RNTextInput
+          ref={inputRef}
+          style={[s.input, isFocused ? s.inputFocused : {}]}
+          placeholder={placeholder}
+          value={value}
+          autoCapitalize="none"
+          underlineColorAndroid="transparent"
+          onChangeText={onChangeText}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          {...inputProps}
+        />
+      </TouchableOpacity>
+
+      {endAdornment &&
+        React.cloneElement(endAdornment, {
+          style: s.endAdornment
+        })}
+    </View>
   )
 }
 
 const s = StyleSheet.create({
   container: {
-    position: 'relative',
+    position: 'relative'
+  },
+
+  wrapper: {
     backgroundColor: '#e9ecef',
     borderRadius: 8,
     paddingHorizontal: 15,
@@ -138,6 +151,12 @@ const s = StyleSheet.create({
   inputFocused: {
     marginTop: 10,
     marginBottom: -10
+  },
+
+  endAdornment: {
+    position: 'absolute',
+    top: 25,
+    right: 10
   }
 })
 
