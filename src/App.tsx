@@ -3,7 +3,7 @@ import { ThemeProvider } from '@emotion/react'
 import { NavigationContainer } from '@react-navigation/native'
 import { Root } from 'native-base'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, StatusBar } from 'react-native'
 import { ModalProvider } from 'react-native-use-modal-hooks'
 
 import { setNavigator } from './navigationRef'
@@ -45,7 +45,7 @@ export default function App() {
               style={{
                 flex: 1,
                 backgroundColor: theme.palette?.background,
-                paddingTop: 50
+                paddingTop: StatusBar.currentHeight
               }}
             >
               <NavigationContainer ref={setNavigator} theme={lightTheme}>

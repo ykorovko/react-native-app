@@ -1,6 +1,6 @@
 import create from 'zustand'
 
-import sleep from '../utils/sleep'
+import wait from '../utils/wait'
 
 export enum TransactionStatus {
   executed = 'executed',
@@ -64,7 +64,7 @@ export const useTransactionsStore = create<TransactionsStoreState>((set) => ({
     set({ pending: true })
 
     try {
-      await sleep(3000)
+      await wait(3000)
 
       set({ data })
     } catch (err) {

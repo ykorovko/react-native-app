@@ -7,6 +7,7 @@ import * as yup from 'yup'
 import Button from '../components/Button'
 import FadeInView from '../components/FadeInView'
 import PasswordField from '../components/PasswordField'
+import ScrollableView from '../components/ScrollableView'
 import TextField from '../components/TextField'
 import LocalizationContext from '../context/LocalizationContext'
 import useUserStore from '../stores/useUserStore'
@@ -65,69 +66,71 @@ const Signup: React.FC<Props> = ({ navigation }) => {
   }, [])
 
   return (
-    <FadeInView>
-      <ContainerCentered>
-        <Title>{t('screens.signup.title')}</Title>
+    <ScrollableView>
+      <FadeInView>
+        <ContainerCentered>
+          <Title>{t('screens.signup.title')}</Title>
 
-        <Grid spacing={1}>
-          <TextField
-            name="fullname"
-            label={t('screens.signup.fullname')}
-            control={control}
-            inputProps={{
-              textContentType: 'name'
-            }}
-          />
-        </Grid>
+          <Grid spacing={1}>
+            <TextField
+              name="fullname"
+              label={t('screens.signup.fullname')}
+              control={control}
+              inputProps={{
+                textContentType: 'name'
+              }}
+            />
+          </Grid>
 
-        <Grid spacing={1}>
-          <TextField
-            name="phone"
-            label={t('screens.signup.phone')}
-            control={control}
-            inputProps={{
-              textContentType: 'telephoneNumber'
-            }}
-          />
-        </Grid>
+          <Grid spacing={1}>
+            <TextField
+              name="phone"
+              label={t('screens.signup.phone')}
+              control={control}
+              inputProps={{
+                textContentType: 'telephoneNumber'
+              }}
+            />
+          </Grid>
 
-        <Grid spacing={1}>
-          <TextField
-            name="email"
-            label={t('screens.signup.email')}
-            control={control}
-            inputProps={{
-              textContentType: 'emailAddress'
-            }}
-          />
-        </Grid>
+          <Grid spacing={1}>
+            <TextField
+              name="email"
+              label={t('screens.signup.email')}
+              control={control}
+              inputProps={{
+                textContentType: 'emailAddress'
+              }}
+            />
+          </Grid>
 
-        <Grid spacing={1}>
-          <PasswordField
-            name="password"
-            label={t('screens.signup.password')}
-            control={control}
-          />
-        </Grid>
+          <Grid spacing={1}>
+            <PasswordField
+              name="password"
+              label={t('screens.signup.password')}
+              control={control}
+            />
+          </Grid>
 
-        <Grid spacing={1}>
-          <PasswordField
-            name="passwordConfirm"
-            label={t('screens.signup.passwordConfirm')}
-            control={control}
-          />
-        </Grid>
+          <Grid spacing={1}>
+            <PasswordField
+              name="passwordConfirm"
+              label={t('screens.signup.passwordConfirm')}
+              control={control}
+            />
+          </Grid>
 
-        <Grid spacing={1}>
-          <Button
-            title={t('buttons.submit')}
-            variant="accent"
-            loading={formState.isSubmitting}
-            onPress={handleSubmit(onSubmit)}
-          />
-        </Grid>
-      </ContainerCentered>
-    </FadeInView>
+          <Grid spacing={1}>
+            <Button
+              title={t('buttons.submit')}
+              variant="accent"
+              loading={formState.isSubmitting}
+              onPress={handleSubmit(onSubmit)}
+            />
+          </Grid>
+        </ContainerCentered>
+      </FadeInView>
+    </ScrollableView>
   )
 }
 

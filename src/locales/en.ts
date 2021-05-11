@@ -20,6 +20,10 @@ export default {
       password: 'Your password',
       passwordConfirm: 'Confirm your password'
     },
+    verify: {
+      title: 'Enter the code',
+      code: 'Code'
+    },
 
     home: {
       balance: 'Balance in dollars:',

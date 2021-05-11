@@ -9,10 +9,11 @@ import {
   TabHeading
 } from 'native-base'
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import { useModal } from 'react-native-use-modal-hooks'
 
 import Modal from '../components/Modal'
+import ScrollableView from '../components/ScrollableView'
 import LocalizationContext from '../context/LocalizationContext'
 import {
   TransactionStatus,
@@ -98,13 +99,13 @@ const Home: React.FC = () => {
               </TabHeading>
             }
           >
-            <View style={s.tabContent}>
+            <ScrollableView style={s.tabContent}>
               <TransactionsList
                 loading={store.pending}
                 loaded={store.loaded}
                 data={store.data[t.key]}
               />
-            </View>
+            </ScrollableView>
           </Tab>
         ))}
       </Tabs>

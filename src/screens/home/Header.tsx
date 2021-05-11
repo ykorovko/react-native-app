@@ -41,7 +41,8 @@ const Header: React.FC<Props> = ({ loading, balance }) => {
 const s = StyleSheet.create({
   header: {
     paddingHorizontal: 15,
-    paddingVertical: 20,
+    paddingTop: 50,
+    paddingBottom: 20,
     backgroundColor: theme.palette?.primary,
 
     borderBottomWidth: 1,

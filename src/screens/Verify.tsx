@@ -5,6 +5,7 @@ import * as yup from 'yup'
 
 import Button from '../components/Button'
 import TextField from '../components/TextField'
+import LocalizationContext from '../context/LocalizationContext'
 import useUserStore from '../stores/useUserStore'
 import { ContainerCentered, Grid, Title } from '../styled'
 
@@ -19,6 +20,8 @@ const schema = yup.object().shape({
 const Verify: React.FC = () => {
   const { verify } = useUserStore()
 
+  const { t } = React.useContext(LocalizationContext)
+
   const { control, handleSubmit, formState } = useForm<VerifyInput>({
     resolver: yupResolver(schema),
     reValidateMode: 'onChange',
@@ -31,15 +34,19 @@ const Verify: React.FC = () => {
 
   return (
     <ContainerCentered>
-      <Title>Enter the code</Title>
+      <Title>{t('screens.verify.title')}</Title>
 
       <Grid spacing={1}>
-        <TextField name="token" label="Code" control={control} />
+        <TextField
+          name="token"
+          label={t('screens.verify.code')}
+          control={control}
+        />
       </Grid>
 
       <Grid spacing={1}>
         <Button
-          title="Submit"
+          title={t('buttons.submit')}
           variant="accent"
           loading={formState.isSubmitting}
           onPress={handleSubmit(onSubmit)}

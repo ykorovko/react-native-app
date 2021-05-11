@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native'
 
 import Button from '../components/Button'
 import LanguageSwitcher from '../components/LanguageSwitcher'
+import ScrollableView from '../components/ScrollableView'
 import Switch from '../components/Switch'
 import LocalizationContext from '../context/LocalizationContext'
 import useUserStore from '../stores/useUserStore'
@@ -20,44 +21,46 @@ const More: React.FC = () => {
 
   return (
     <Container>
-      <View style={styles.listItem}>
-        <Title>{t('screens.more.title')}</Title>
-      </View>
-
-      <View style={styles.listItem}>
-        <Label>{t('screens.more.fullname')}</Label>
-        <Label>{user?.fullname}</Label>
-      </View>
-
-      <View style={styles.listItem}>
-        <View>
-          <Label>{t('screens.more.phone')}</Label>
+      <ScrollableView>
+        <View style={styles.listItem}>
+          <Title>{t('screens.more.title')}</Title>
         </View>
 
-        <View>
-          <Label>{user?.phone}</Label>
+        <View style={styles.listItem}>
+          <Label>{t('screens.more.fullname')}</Label>
+          <Label>{user?.fullname}</Label>
         </View>
-      </View>
 
-      <View style={styles.listItem}>
-        <Label>{t('screens.more.auth')}</Label>
+        <View style={styles.listItem}>
+          <View>
+            <Label>{t('screens.more.phone')}</Label>
+          </View>
 
-        <Switch value={!!user?.oath} onValueChange={handleSwitch} />
-      </View>
+          <View>
+            <Label>{user?.phone}</Label>
+          </View>
+        </View>
 
-      <View style={styles.listItem}>
-        <Label>{t('screens.more.language')}</Label>
+        <View style={styles.listItem}>
+          <Label>{t('screens.more.auth')}</Label>
 
-        <LanguageSwitcher />
-      </View>
+          <Switch value={!!user?.oath} onValueChange={handleSwitch} />
+        </View>
 
-      <Grid spacing={3}>
-        <Button
-          title={t('screens.more.logout')}
-          variant="accent"
-          onPress={logout}
-        />
-      </Grid>
+        <View style={styles.listItem}>
+          <Label>{t('screens.more.language')}</Label>
+
+          <LanguageSwitcher />
+        </View>
+
+        <Grid spacing={3}>
+          <Button
+            title={t('screens.more.logout')}
+            variant="accent"
+            onPress={logout}
+          />
+        </Grid>
+      </ScrollableView>
     </Container>
   )
 }

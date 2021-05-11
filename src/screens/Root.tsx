@@ -7,6 +7,7 @@ import { useModal } from 'react-native-use-modal-hooks'
 import Button from '../components/Button'
 import FadeInView from '../components/FadeInView'
 import LanguageSwitcher from '../components/LanguageSwitcher'
+import ScrollableView from '../components/ScrollableView'
 import LocalizationContext from '../context/LocalizationContext'
 import useUserStore from '../stores/useUserStore'
 import { ContainerCentered, Grid, TextStyled, Title } from '../styled'
@@ -42,7 +43,7 @@ const Root: React.FC<Props> = ({ navigation }) => {
   }, [])
 
   return (
-    <>
+    <ScrollableView>
       <FadeInView>
         <ContainerCentered>
           <Title style={{ textAlign: 'center' }}>
@@ -73,7 +74,7 @@ const Root: React.FC<Props> = ({ navigation }) => {
       <View style={styles.switcher}>
         <LanguageSwitcher />
       </View>
-    </>
+    </ScrollableView>
   )
 }
 

@@ -118,9 +118,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
 
   logout: async () => {
     try {
-      // await AsyncStorage.removeItem('token')
-
-      await AsyncStorage.clear()
+      await AsyncStorage.removeItem('token')
 
       set({ token: undefined, user: undefined })
     } catch (err) {

@@ -43,10 +43,10 @@ const LocalAuthModal: React.FC<Props> = ({
 }) => {
   const { t } = React.useContext(LocalizationContext)
 
-  const fallBackToDefaultAuth = () => {
+  const fallBackToDefaultAuth = React.useCallback(() => {
     onClose()
     fallback()
-  }
+  }, [])
 
   const handleBiometricAuth = React.useCallback(async () => {
     // Check if hardware supports biometrics
@@ -77,10 +77,10 @@ const LocalAuthModal: React.FC<Props> = ({
       cancelLabel: 'Cancel'
     })
 
-    console.log({ isBiometricAvailable })
+    // console.log({ isBiometricAvailable })
     // console.log({ supportedBiometrics })
-    console.log({ savedBiometrics })
-    console.log({ biometricAuth })
+    // console.log({ savedBiometrics })
+    // console.log({ biometricAuth })
 
     if (biometricAuth.success) onSubmit()
   }, [])
