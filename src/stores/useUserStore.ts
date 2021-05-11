@@ -30,6 +30,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
   tryLocalSignin: async () => {
     try {
       const token = await AsyncStorage.getItem('token')
+
       await get().loadUser()
 
       if (token) {
@@ -46,7 +47,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
 
   signup: async (values) => {
     try {
-      const res = await api.post('/v1/auth/register', { data: values })
+      const res = await api.post('/v1/auth/register', values)
 
       const token = res.data.token
       const user = res.data.user
@@ -63,9 +64,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
 
   login: async (email, password) => {
     try {
-      const res = await api.post('/v1/auth/login', {
-        data: { email, password }
-      })
+      const res = await api.post('/v1/auth/login', { email, password })
 
       const {
         data: { token, user }
@@ -81,13 +80,13 @@ const useUserStore = create<UserStoreState>((set, get) => ({
         set({ token, user })
       }
     } catch (err) {
-      Toaster.error(err.message)
+      Toaster.error(err?.message)
     }
   },
 
   verify: async (values) => {
     try {
-      await api.post('/v1/auth/verify', { data: values })
+      await api.post('/v1/auth/verify', values)
 
       const token = await AsyncStorage.getItem('token')
 
@@ -109,7 +108,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
 
   updateUser: async (values) => {
     try {
-      const res = await api.post('/v1/user', { data: values })
+      const res = await api.post('/v1/user', values)
 
       set({ user: res.data })
     } catch (err) {
@@ -119,7 +118,9 @@ const useUserStore = create<UserStoreState>((set, get) => ({
 
   logout: async () => {
     try {
-      await AsyncStorage.removeItem('token')
+      // await AsyncStorage.removeItem('token')
+
+      await AsyncStorage.clear()
 
       set({ token: undefined, user: undefined })
     } catch (err) {

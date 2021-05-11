@@ -34,7 +34,6 @@ const PasswordField: React.FC<AllProps> = ({
   })
 
   const handleIconPress = React.useCallback(() => {
-    console.log('YURA')
     setSecure((prevState) => !prevState)
   }, [])
 

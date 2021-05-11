@@ -35,6 +35,10 @@ export const buttonStyles = StyleSheet.create({
     color: '#fff',
     backgroundColor: theme.palette?.accent,
     borderColor: theme.palette?.accent
+  },
+
+  disabled: {
+    opacity: 0.5
   }
 })
 

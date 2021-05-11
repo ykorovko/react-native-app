@@ -1,10 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios, { AxiosError } from 'axios'
 
-import ApiBuilder from './utils/ApiBuilder'
-
-class Api extends ApiBuilder {}
-
-const api = new Api({
+const api = axios.create({
   baseURL: 'http://localhost:4000',
   headers: {
     'Content-Type': 'application/json',
@@ -12,7 +9,7 @@ const api = new Api({
   }
 })
 
-api.instance.interceptors.request.use(
+api.interceptors.request.use(
   async (config) => {
     const token = await AsyncStorage.getItem('token')
 
@@ -24,6 +21,15 @@ api.instance.interceptors.request.use(
   },
   (err) => {
     return Promise.reject(err)
+  }
+)
+
+api.interceptors.response.use(
+  function (response) {
+    return response?.data
+  },
+  function (error: AxiosError) {
+    return Promise.reject(error?.response?.data)
   }
 )
 

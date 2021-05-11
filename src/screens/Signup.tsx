@@ -8,6 +8,7 @@ import Button from '../components/Button'
 import FadeInView from '../components/FadeInView'
 import PasswordField from '../components/PasswordField'
 import TextField from '../components/TextField'
+import LocalizationContext from '../context/LocalizationContext'
 import useUserStore from '../stores/useUserStore'
 import { ContainerCentered, Grid, Title } from '../styled'
 import { RootStackParamList } from '../types/navigation'
@@ -38,6 +39,8 @@ const schema = yup.object().shape({
 const Signup: React.FC<Props> = ({ navigation }) => {
   const { signup } = useUserStore()
 
+  const { t } = React.useContext(LocalizationContext)
+
   const { control, handleSubmit, formState, setError } = useForm<SignupInput>({
     resolver: yupResolver(schema),
     reValidateMode: 'onChange',
@@ -64,12 +67,12 @@ const Signup: React.FC<Props> = ({ navigation }) => {
   return (
     <FadeInView>
       <ContainerCentered>
-        <Title>Signup</Title>
+        <Title>{t('screens.signup.title')}</Title>
 
         <Grid spacing={1}>
           <TextField
             name="fullname"
-            label="Your fullname"
+            label={t('screens.signup.fullname')}
             control={control}
             inputProps={{
               textContentType: 'name'
@@ -80,7 +83,7 @@ const Signup: React.FC<Props> = ({ navigation }) => {
         <Grid spacing={1}>
           <TextField
             name="phone"
-            label="Your phone"
+            label={t('screens.signup.phone')}
             control={control}
             inputProps={{
               textContentType: 'telephoneNumber'
@@ -91,7 +94,7 @@ const Signup: React.FC<Props> = ({ navigation }) => {
         <Grid spacing={1}>
           <TextField
             name="email"
-            label="Your email"
+            label={t('screens.signup.email')}
             control={control}
             inputProps={{
               textContentType: 'emailAddress'
@@ -102,7 +105,7 @@ const Signup: React.FC<Props> = ({ navigation }) => {
         <Grid spacing={1}>
           <PasswordField
             name="password"
-            label="Your password"
+            label={t('screens.signup.password')}
             control={control}
           />
         </Grid>
@@ -110,14 +113,14 @@ const Signup: React.FC<Props> = ({ navigation }) => {
         <Grid spacing={1}>
           <PasswordField
             name="passwordConfirm"
-            label="Confirm your password"
+            label={t('screens.signup.passwordConfirm')}
             control={control}
           />
         </Grid>
 
         <Grid spacing={1}>
           <Button
-            title="submit"
+            title={t('buttons.submit')}
             variant="accent"
             loading={formState.isSubmitting}
             onPress={handleSubmit(onSubmit)}

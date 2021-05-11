@@ -8,17 +8,25 @@ type Props = {
   onPress: () => void
   loading?: boolean
   variant?: 'primary' | 'contained' | 'accent'
+  disabled?: boolean
 }
 
 const Button: React.FC<Props> = ({
   title,
   onPress,
   loading,
-  variant = 'primary'
+  variant = 'primary',
+  disabled
 }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={[buttonStyles.main, buttonStyles[variant]]}>
+    <TouchableOpacity onPress={onPress} disabled={disabled}>
+      <View
+        style={[
+          buttonStyles.main,
+          buttonStyles[variant],
+          disabled ? buttonStyles.disabled : {}
+        ]}
+      >
         {loading ? (
           <ActivityIndicator size="large" />
         ) : (

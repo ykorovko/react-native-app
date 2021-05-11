@@ -4,13 +4,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
+import LocalizationContext from '../context/LocalizationContext'
 import HomeScreen from '../screens/Home'
 import MessagesScreen from '../screens/Messages'
 import MoreScreen from '../screens/More'
 import PaymentsScreen from '../screens/Payments'
 
-const Stack = createStackNavigator()
 const Tabs = createBottomTabNavigator()
+const Stack = createStackNavigator()
 
 const getIconName = (routeName: string): string => {
   switch (routeName) {
@@ -29,6 +30,8 @@ const getIconName = (routeName: string): string => {
 
 const HomeStack: React.FC = () => {
   const theme = useTheme()
+
+  const { t } = React.useContext(LocalizationContext)
 
   return (
     <Tabs.Navigator
@@ -50,10 +53,26 @@ const HomeStack: React.FC = () => {
         }
       })}
     >
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Payments" component={PaymentsScreen} />
-      <Stack.Screen name="Messages" component={MessagesScreen} />
-      <Stack.Screen name="More" component={MoreScreen} />
+      <Stack.Screen
+        name={'Home'}
+        component={HomeScreen}
+        options={{ title: t('navigators.home') }}
+      />
+      <Stack.Screen
+        name={'Payments'}
+        component={PaymentsScreen}
+        options={{ title: t('navigators.payments') }}
+      />
+      <Stack.Screen
+        name={'Messages'}
+        component={MessagesScreen}
+        options={{ title: t('navigators.messages') }}
+      />
+      <Stack.Screen
+        name={'More'}
+        component={MoreScreen}
+        options={{ title: t('navigators.more') }}
+      />
     </Tabs.Navigator>
   )
 }

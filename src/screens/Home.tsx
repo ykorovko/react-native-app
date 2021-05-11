@@ -1,4 +1,6 @@
 import { useTheme } from '@emotion/react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as LocalAuthentication from 'expo-local-authentication'
 import {
   Container as ContainerBase,
   Tab,
@@ -8,7 +10,10 @@ import {
 } from 'native-base'
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import { useModal } from 'react-native-use-modal-hooks'
 
+import Modal from '../components/Modal'
+import LocalizationContext from '../context/LocalizationContext'
 import {
   TransactionStatus,
   useTransactionsStore
@@ -18,21 +23,62 @@ import theme from '../theme'
 import Header from './home/Header'
 import TransactionsList from './home/TransactionsList'
 
-const tabs = [
-  { key: TransactionStatus.executed, title: 'Executed' },
-  { key: TransactionStatus.forSignature, title: 'For signature' },
-  { key: TransactionStatus.processing, title: 'Processing' },
-  { key: TransactionStatus.rejected, title: 'Rejected' }
-]
-
-const Payments: React.FC = () => {
+const Home: React.FC = () => {
   const { palette } = useTheme()
 
   const store = useTransactionsStore()
 
+  const { t, locale } = React.useContext(LocalizationContext)
+
+  const [showModal, hideModal] = useModal(() => (
+    <Modal
+      isVisible
+      title={t('screens.home.fingerprintSignin')}
+      onClose={hideModal}
+      onSubmit={() => AsyncStorage.setItem('localAuthEnabled', 'true')}
+    />
+  ))
+
+  /**
+   * Load transactions
+   */
   React.useEffect(() => {
     store.loadTransactions()
   }, [])
+
+  React.useEffect(() => {
+    const bootstrapAsync = async () => {
+      try {
+        const compatible = await LocalAuthentication.hasHardwareAsync()
+        const enabled = await AsyncStorage.getItem('localAuthEnabled')
+
+        if (compatible && !enabled) showModal()
+      } catch (e) {
+        console.error(e)
+      }
+    }
+
+    bootstrapAsync()
+  }, [])
+
+  const tabs = React.useMemo(
+    () => [
+      {
+        key: TransactionStatus.executed,
+        title: t('screens.home.executed')
+      },
+      {
+        key: TransactionStatus.forSignature,
+        title: t('screens.home.forSignature')
+      },
+      {
+        key: TransactionStatus.processing,
+        title: t('screens.home.processing')
+      },
+      { key: TransactionStatus.rejected, title: t('screens.home.rejected') }
+    ],
+    [locale]
+  )
 
   return (
     <ContainerBase>
@@ -85,4 +131,4 @@ const s = StyleSheet.create({
   }
 })
 
-export default Payments
+export default Home

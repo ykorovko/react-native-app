@@ -8,6 +8,7 @@ import Button from '../components/Button'
 import FadeInView from '../components/FadeInView'
 import PasswordField from '../components/PasswordField'
 import TextField from '../components/TextField'
+import LocalizationContext from '../context/LocalizationContext'
 import useUserStore from '../stores/useUserStore'
 import { ContainerCentered, Grid, Title } from '../styled'
 import { RootStackParamList } from '../types/navigation'
@@ -27,6 +28,8 @@ const schema = yup.object().shape({
 const Signin: React.FC<Props> = () => {
   const { login } = useUserStore()
 
+  const { t } = React.useContext(LocalizationContext)
+
   const { control, handleSubmit, formState } = useForm<SigninInput>({
     resolver: yupResolver(schema),
     reValidateMode: 'onChange',
@@ -40,12 +43,12 @@ const Signin: React.FC<Props> = () => {
   return (
     <FadeInView>
       <ContainerCentered>
-        <Title>Signin</Title>
+        <Title>{t('screens.signin.title')}</Title>
 
         <Grid spacing={1}>
           <TextField
             name="email"
-            label="Your email"
+            label={t('screens.signin.email')}
             control={control}
             inputProps={{
               textContentType: 'emailAddress'
@@ -56,14 +59,14 @@ const Signin: React.FC<Props> = () => {
         <Grid spacing={1}>
           <PasswordField
             name="password"
-            label="Your password"
+            label={t('screens.signin.password')}
             control={control}
           />
         </Grid>
 
         <Grid spacing={1}>
           <Button
-            title="Submit"
+            title={t('buttons.submit')}
             variant="accent"
             loading={formState.isSubmitting}
             onPress={handleSubmit(onSubmit)}

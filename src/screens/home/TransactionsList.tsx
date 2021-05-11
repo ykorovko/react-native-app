@@ -3,6 +3,7 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 
+import LocalizationContext from '../../context/LocalizationContext'
 import { Transaction } from '../../stores/useTransactionsStore'
 import { TextStyled, Grid } from '../../styled'
 
@@ -18,6 +19,8 @@ type Props = {
 const date = new Date()
 
 const TransactionsList: React.FC<Props> = ({ loading, loaded, data }) => {
+  const { t } = React.useContext(LocalizationContext)
+
   const isEmpty = loaded && !data?.length
 
   return (
@@ -45,7 +48,7 @@ const TransactionsList: React.FC<Props> = ({ loading, loaded, data }) => {
           return (
             <Grid spacing={3}>
               <TextStyled fontSize={22} centered>
-                No data
+                {t('components.TransactionsList.noData')}
               </TextStyled>
             </Grid>
           )

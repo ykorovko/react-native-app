@@ -4,10 +4,12 @@ import { NavigationContainer } from '@react-navigation/native'
 import { Root } from 'native-base'
 import React from 'react'
 import { Text, View } from 'react-native'
+import { ModalProvider } from 'react-native-use-modal-hooks'
 
 import { setNavigator } from './navigationRef'
 import AuthStack from './navigators/AuthStack'
 import HomeStack from './navigators/HomeStack'
+import LocalizationProvider from './providers/LocalizationProvider'
 import useUserStore from './stores/useUserStore'
 import theme from './theme'
 import { lightTheme } from './themes'
@@ -36,19 +38,23 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Root>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: theme.palette?.background,
-            paddingTop: 50
-          }}
-        >
-          <NavigationContainer ref={setNavigator} theme={lightTheme}>
-            {token ? <HomeStack /> : <AuthStack />}
-          </NavigationContainer>
-        </View>
-      </Root>
+      <LocalizationProvider>
+        <ModalProvider>
+          <Root>
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: theme.palette?.background,
+                paddingTop: 50
+              }}
+            >
+              <NavigationContainer ref={setNavigator} theme={lightTheme}>
+                {token ? <HomeStack /> : <AuthStack />}
+              </NavigationContainer>
+            </View>
+          </Root>
+        </ModalProvider>
+      </LocalizationProvider>
     </ThemeProvider>
   )
 }
