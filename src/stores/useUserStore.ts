@@ -1,10 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import * as Keychain from 'react-native-keychain'
+import * as SecureStore from 'expo-secure-store'
 import create from 'zustand'
 
 import api from '../api'
-import { SCREENS, STORAGE } from '../constants'
+import { SCREENS, SECURE_STORAGE, STORAGE } from '../constants'
 import { navigate } from '../navigationRef'
+import { SignupInput } from '../types/inputs'
 import Toaster from '../utils/Toaster'
 
 type UserState = {
@@ -16,7 +17,8 @@ type UserState = {
 
 type UserStoreState = {
   tryLocalSignin: () => void
-  signup: (values: { fullname: string }) => void
+  loginWithSecureStoreCredentials: () => void
+  signup: (values: SignupInput) => void
   login: (email: string, password: string) => void
   verify: (values: { token: string }) => void
   loadUser: () => void
@@ -28,16 +30,39 @@ type UserStoreState = {
   error?: string
 }
 
-const useUserStore = create<UserStoreState>((set, get, store) => ({
+const useUserStore = create<UserStoreState>((set, get) => ({
   tryLocalSignin: async () => {
     try {
       const token = await AsyncStorage.getItem(STORAGE.token)
 
-      await get().loadUser()
+      if (token) {
+        set({ token })
 
-      if (token) set({ token })
+        await get().loadUser()
+
+        navigate(SCREENS.home)
+      } else {
+        navigate(SCREENS.root)
+      }
     } catch (err) {
       Toaster.error('Auth error')
+    }
+  },
+
+  loginWithSecureStoreCredentials: async () => {
+    try {
+      const email = await SecureStore.getItemAsync(SECURE_STORAGE.email)
+      const password = await SecureStore.getItemAsync(SECURE_STORAGE.password)
+
+      if (email && password) {
+        await get().login(email, password)
+      } else {
+        navigate(SCREENS.signin)
+
+        Toaster.error('Error, please use your email and password to login')
+      }
+    } catch (err) {
+      Toaster.error('Local auth error')
     }
   },
 
@@ -49,6 +74,9 @@ const useUserStore = create<UserStoreState>((set, get, store) => ({
       const user = res.data.user
 
       await AsyncStorage.setItem(STORAGE.token, token)
+
+      await SecureStore.setItemAsync(SECURE_STORAGE.email, values.email)
+      await SecureStore.setItemAsync(SECURE_STORAGE.password, values.password)
 
       set({ token, user })
     } catch (err) {
@@ -68,10 +96,8 @@ const useUserStore = create<UserStoreState>((set, get, store) => ({
 
       await AsyncStorage.setItem(STORAGE.token, token)
 
-      console.log({ email, password })
-
-      // Store the credentials
-      // await Keychain.setGenericPassword(email, password)
+      await SecureStore.setItemAsync(SECURE_STORAGE.email, email)
+      await SecureStore.setItemAsync(SECURE_STORAGE.password, password)
 
       if (user?.oath) {
         set({ user })
@@ -81,8 +107,6 @@ const useUserStore = create<UserStoreState>((set, get, store) => ({
         set({ token, user })
       }
     } catch (err) {
-      console.error(err)
-
       Toaster.error(err?.message)
     }
   },

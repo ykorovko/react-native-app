@@ -12,17 +12,10 @@ import TextField from '../components/TextField'
 import LocalizationContext from '../context/LocalizationContext'
 import useUserStore from '../stores/useUserStore'
 import { ContainerCentered, Spacer, Title } from '../styled'
+import { SignupInput } from '../types/inputs'
 import { RootStackParamList } from '../types/navigation'
 
 type Props = StackScreenProps<RootStackParamList, 'Signup'>
-
-type SignupInput = {
-  fullname: string
-  phone: string
-  email: string
-  password: string
-  passwordConfirm: string
-}
 
 const schema = yup.object().shape({
   fullname: yup.string().min(6).required(),

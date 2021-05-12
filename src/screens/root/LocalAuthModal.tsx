@@ -77,11 +77,6 @@ const LocalAuthModal: React.FC<Props> = ({
       cancelLabel: 'Cancel'
     })
 
-    // console.log({ isBiometricAvailable })
-    // console.log({ supportedBiometrics })
-    // console.log({ savedBiometrics })
-    // console.log({ biometricAuth })
-
     if (biometricAuth.success) onSubmit()
   }, [])
 

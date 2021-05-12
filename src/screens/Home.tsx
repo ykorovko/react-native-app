@@ -10,10 +10,12 @@ import {
 } from 'native-base'
 import React from 'react'
 import { StyleSheet, Text } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { useModal } from 'react-native-use-modal-hooks'
 
 import Modal from '../components/Modal'
-import ScrollableView from '../components/ScrollableView'
+// import ScrollableView from '../components/ScrollableView'
+import { STORAGE } from '../constants'
 import LocalizationContext from '../context/LocalizationContext'
 import {
   TransactionStatus,
@@ -36,7 +38,7 @@ const Home: React.FC = () => {
       isVisible
       title={t('screens.home.fingerprintSignin')}
       onClose={hideModal}
-      onSubmit={() => AsyncStorage.setItem('localAuthEnabled', 'true')}
+      onSubmit={() => AsyncStorage.setItem(STORAGE.localAuthEnabled, 'true')}
     />
   ))
 
@@ -51,7 +53,7 @@ const Home: React.FC = () => {
     const bootstrapAsync = async () => {
       try {
         const compatible = await LocalAuthentication.hasHardwareAsync()
-        const enabled = await AsyncStorage.getItem('localAuthEnabled')
+        const enabled = await AsyncStorage.getItem(STORAGE.localAuthEnabled)
 
         if (compatible && !enabled) showModal()
       } catch (e) {
@@ -99,13 +101,13 @@ const Home: React.FC = () => {
               </TabHeading>
             }
           >
-            <ScrollableView style={s.tabContent}>
+            <SafeAreaView style={s.tabContent}>
               <TransactionsList
                 loading={store.pending}
                 loaded={store.loaded}
                 data={store.data[t.key]}
               />
-            </ScrollableView>
+            </SafeAreaView>
           </Tab>
         ))}
       </Tabs>

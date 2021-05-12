@@ -50,7 +50,7 @@ const TransactionCard: React.FC<Props> = ({
           }}
           bold
         >
-          {amount.toLocaleString('en-US', {
+          {amount?.toLocaleString('en-US', {
             style: 'currency',
             currency: 'USD',
             maximumFractionDigits: 0

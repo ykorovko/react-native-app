@@ -8,6 +8,7 @@ import Button from '../components/Button'
 import FadeInView from '../components/FadeInView'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import ScrollableView from '../components/ScrollableView'
+import { STORAGE } from '../constants'
 import LocalizationContext from '../context/LocalizationContext'
 import useUserStore from '../stores/useUserStore'
 import { ContainerCentered, Spacer, TextStyled, Title } from '../styled'
@@ -26,14 +27,14 @@ const Root: React.FC<Props> = ({ navigation }) => {
     <LocalAuthModal
       isVisible
       onClose={hideModal}
-      onSubmit={() => store.login('admin@test.com', 'password')}
+      onSubmit={store.loginWithSecureStoreCredentials}
       fallback={() => navigation.push('Signin')}
     />
   ))
 
   const handleSignin = React.useCallback(async () => {
     try {
-      const touchId = await AsyncStorage.getItem('localAuthEnabled')
+      const touchId = await AsyncStorage.getItem(STORAGE.localAuthEnabled)
 
       if (touchId) showModal()
       else navigation.push('Signin')

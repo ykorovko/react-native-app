@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 
 import LocalizationContext from '../../context/LocalizationContext'
@@ -20,6 +20,19 @@ const date = new Date()
 
 const TransactionsList: React.FC<Props> = ({ loading, loaded, data }) => {
   const { t } = React.useContext(LocalizationContext)
+
+  const renderItem = React.useCallback(
+    ({ item }) => (
+      <TransactionCard
+        key={item.id}
+        title={item.title}
+        description={item.description}
+        amount={item.amount}
+        date={item.date}
+      />
+    ),
+    []
+  )
 
   const isEmpty = loaded && !data?.length
 
@@ -53,15 +66,13 @@ const TransactionsList: React.FC<Props> = ({ loading, loaded, data }) => {
             </Spacer>
           )
 
-        return data.map((item) => (
-          <TransactionCard
-            key={item.id}
-            title={item.title}
-            description={item.description}
-            amount={item.amount}
-            date={item.date}
+        return (
+          <FlatList
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id.toString()}
           />
-        ))
+        )
       })()}
     </View>
   )
@@ -73,7 +84,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     paddingHorizontal: 20,
-    paddingVertical: 30
+    paddingBottom: 30
   }
 })
 

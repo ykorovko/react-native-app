@@ -1,11 +1,13 @@
 import 'react-native-gesture-handler'
+
 import { ThemeProvider } from '@emotion/react'
 import { NavigationContainer } from '@react-navigation/native'
 import { Root } from 'native-base'
 import React from 'react'
-import { Text, View, StatusBar } from 'react-native'
+import { View, StatusBar } from 'react-native'
 import { ModalProvider } from 'react-native-use-modal-hooks'
 
+import Loader from './components/Loader'
 import { setNavigator } from './navigationRef'
 import AuthStack from './navigators/AuthStack'
 import HomeStack from './navigators/HomeStack'
@@ -34,7 +36,7 @@ export default function App() {
     bootstrapAsync()
   }, [])
 
-  if (loading) return <Text>Loading...</Text>
+  if (loading) return <Loader />
 
   return (
     <ThemeProvider theme={theme}>

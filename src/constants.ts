@@ -1,8 +1,17 @@
 /**
- * Async storage keys
+ * Async storage
  */
 export const STORAGE = {
-  token: 'string'
+  token: 'token',
+  localAuthEnabled: 'localAuthEnabled'
+}
+
+/**
+ * Secure storage
+ */
+export const SECURE_STORAGE = {
+  email: 'email',
+  password: 'password'
 }
 
 /**
