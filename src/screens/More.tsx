@@ -7,7 +7,7 @@ import ScrollableView from '../components/ScrollableView'
 import Switch from '../components/Switch'
 import LocalizationContext from '../context/LocalizationContext'
 import useUserStore from '../stores/useUserStore'
-import { Container, Grid, Label, Title } from '../styled'
+import { Container, Spacer, Label, Title } from '../styled'
 import theme from '../theme'
 
 const More: React.FC = () => {
@@ -53,13 +53,13 @@ const More: React.FC = () => {
           <LanguageSwitcher />
         </View>
 
-        <Grid spacing={3}>
+        <Spacer spacing={3}>
           <Button
             title={t('screens.more.logout')}
             variant="accent"
             onPress={logout}
           />
-        </Grid>
+        </Spacer>
       </ScrollableView>
     </Container>
   )

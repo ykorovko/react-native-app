@@ -1,7 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as Keychain from 'react-native-keychain'
 import create from 'zustand'
 
 import api from '../api'
+import { SCREENS, STORAGE } from '../constants'
 import { navigate } from '../navigationRef'
 import Toaster from '../utils/Toaster'
 
@@ -26,20 +28,14 @@ type UserStoreState = {
   error?: string
 }
 
-const useUserStore = create<UserStoreState>((set, get) => ({
+const useUserStore = create<UserStoreState>((set, get, store) => ({
   tryLocalSignin: async () => {
     try {
-      const token = await AsyncStorage.getItem('token')
+      const token = await AsyncStorage.getItem(STORAGE.token)
 
       await get().loadUser()
 
-      if (token) {
-        set({ token })
-
-        navigate('Home')
-      } else {
-        navigate('Root')
-      }
+      if (token) set({ token })
     } catch (err) {
       Toaster.error('Auth error')
     }
@@ -52,7 +48,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
       const token = res.data.token
       const user = res.data.user
 
-      await AsyncStorage.setItem('token', token)
+      await AsyncStorage.setItem(STORAGE.token, token)
 
       set({ token, user })
     } catch (err) {
@@ -70,16 +66,23 @@ const useUserStore = create<UserStoreState>((set, get) => ({
         data: { token, user }
       } = res
 
-      await AsyncStorage.setItem('token', token)
+      await AsyncStorage.setItem(STORAGE.token, token)
+
+      console.log({ email, password })
+
+      // Store the credentials
+      // await Keychain.setGenericPassword(email, password)
 
       if (user?.oath) {
         set({ user })
 
-        navigate('Verify')
+        navigate(SCREENS.verify)
       } else {
         set({ token, user })
       }
     } catch (err) {
+      console.error(err)
+
       Toaster.error(err?.message)
     }
   },
@@ -88,7 +91,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
     try {
       await api.post('/v1/auth/verify', values)
 
-      const token = await AsyncStorage.getItem('token')
+      const token = await AsyncStorage.getItem(STORAGE.token)
 
       if (token) set({ token })
     } catch (err) {
@@ -102,7 +105,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
 
       set({ user: res.data })
     } catch (err) {
-      Toaster.error('Сoudn&#39;t load the user')
+      Toaster.error('Unable to load user')
     }
   },
 
@@ -118,7 +121,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
 
   logout: async () => {
     try {
-      await AsyncStorage.removeItem('token')
+      await AsyncStorage.removeItem(STORAGE.token)
 
       set({ token: undefined, user: undefined })
     } catch (err) {

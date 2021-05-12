@@ -1,15 +1,15 @@
 import React from 'react'
 
 import ScrollableView from '../components/ScrollableView'
-import { Container, Grid, Title } from '../styled'
+import { Container, Spacer, Title } from '../styled'
 
 const Payments: React.FC = () => {
   return (
     <Container>
       <ScrollableView>
-        <Grid spacing={1}>
+        <Spacer spacing={1}>
           <Title>Payments</Title>
-        </Grid>
+        </Spacer>
       </ScrollableView>
     </Container>
   )

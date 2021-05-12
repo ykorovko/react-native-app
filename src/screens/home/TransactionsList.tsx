@@ -5,7 +5,7 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 
 import LocalizationContext from '../../context/LocalizationContext'
 import { Transaction } from '../../stores/useTransactionsStore'
-import { TextStyled, Grid } from '../../styled'
+import { TextStyled, Spacer } from '../../styled'
 
 import TransactionCard from './TransactionCard'
 import TransactionsPlaceholder from './TransactionsPlaceholder'
@@ -46,11 +46,11 @@ const TransactionsList: React.FC<Props> = ({ loading, loaded, data }) => {
 
         if (isEmpty)
           return (
-            <Grid spacing={3}>
+            <Spacer spacing={3}>
               <TextStyled fontSize={22} centered>
                 {t('components.TransactionsList.noData')}
               </TextStyled>
-            </Grid>
+            </Spacer>
           )
 
         return data.map((item) => (

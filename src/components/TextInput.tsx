@@ -6,53 +6,51 @@ import {
   TextInput as RNTextInput,
   TextInputFocusEventData,
   Animated,
-  View
+  View,
+  StyleProp,
+  TextInputProps,
+  TextStyle
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 type Props = {
+  style?: StyleProp<TextStyle>
   label: string
   value: string
   onChangeText: () => void
-  inputProps?: { [key: string]: any }
+  inputProps?: TextInputProps
   endAdornment?: JSX.Element
   onFocus?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void
   onBlur?: (e: NativeSyntheticEvent<TargetedEvent>) => void
 }
 
-const TextInput: React.FC<Props> = ({
-  label,
-  value,
-  onChangeText,
-  inputProps,
-  endAdornment,
-  onBlur,
-  onFocus
-}) => {
-  const [isFocused, setFocused] = React.useState(false)
+const TextInput: React.FC<Props> = React.forwardRef((props, ref) => {
+  const {
+    style,
+    label,
+    value,
+    onChangeText,
+    inputProps,
+    endAdornment,
+    onBlur,
+    onFocus
+  } = props
 
-  const inputRef = React.useRef()
+  const innerRef = React.useRef(ref)
+
+  const [isFocused, setFocused] = React.useState(false)
 
   const animatedOpacity = React.useRef(new Animated.Value(0)).current
   const animatedTop = React.useRef(new Animated.Value(30)).current
 
   const withLabel = isFocused || !!value
 
-  React.useEffect(() => {}, [])
-
   const handleFocus = React.useCallback(
     (event) => {
-      Animated.timing(animatedOpacity, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: false,
-        isInteraction: true
-      }).start()
-
       Animated.timing(animatedTop, {
         toValue: 10,
-        duration: 100,
-        useNativeDriver: false,
+        duration: 150,
+        useNativeDriver: true,
         isInteraction: true
       }).start()
 
@@ -66,10 +64,10 @@ const TextInput: React.FC<Props> = ({
   const handleBlur = React.useCallback(
     (event) => {
       if (!value) {
-        Animated.timing(animatedOpacity, {
-          toValue: 0,
-          duration: 300,
-          useNativeDriver: false,
+        Animated.timing(animatedTop, {
+          toValue: 30,
+          duration: 150,
+          useNativeDriver: true,
           isInteraction: true
         }).start()
 
@@ -86,21 +84,24 @@ const TextInput: React.FC<Props> = ({
   return (
     <View style={s.container}>
       <TouchableOpacity
-        style={[s.wrapper, withLabel ? s.focused : {}]}
-        onPress={() => (inputRef as any).current.focus()}
+        style={[s.wrapper, withLabel ? s.focused : {}, style]}
+        onPress={() => (innerRef as any).current.focus()}
       >
         <Animated.Text
           style={{
             ...s.label,
-            top: animatedTop,
-            opacity: animatedOpacity
+            transform: [{ translateY: animatedTop }],
+            opacity: animatedTop.interpolate({
+              inputRange: [10, 30],
+              outputRange: [1, 0]
+            })
           }}
         >
           {label}
         </Animated.Text>
 
         <RNTextInput
-          ref={inputRef}
+          ref={innerRef}
           style={[s.input, isFocused ? s.inputFocused : {}]}
           placeholder={placeholder}
           value={value}
@@ -119,7 +120,7 @@ const TextInput: React.FC<Props> = ({
         })}
     </View>
   )
-}
+})
 
 const s = StyleSheet.create({
   container: {

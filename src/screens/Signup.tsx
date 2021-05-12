@@ -11,7 +11,7 @@ import ScrollableView from '../components/ScrollableView'
 import TextField from '../components/TextField'
 import LocalizationContext from '../context/LocalizationContext'
 import useUserStore from '../stores/useUserStore'
-import { ContainerCentered, Grid, Title } from '../styled'
+import { ContainerCentered, Spacer, Title } from '../styled'
 import { RootStackParamList } from '../types/navigation'
 
 type Props = StackScreenProps<RootStackParamList, 'Signup'>
@@ -71,7 +71,7 @@ const Signup: React.FC<Props> = ({ navigation }) => {
         <ContainerCentered>
           <Title>{t('screens.signup.title')}</Title>
 
-          <Grid spacing={1}>
+          <Spacer spacing={1}>
             <TextField
               name="fullname"
               label={t('screens.signup.fullname')}
@@ -80,9 +80,9 @@ const Signup: React.FC<Props> = ({ navigation }) => {
                 textContentType: 'name'
               }}
             />
-          </Grid>
+          </Spacer>
 
-          <Grid spacing={1}>
+          <Spacer spacing={1}>
             <TextField
               name="phone"
               label={t('screens.signup.phone')}
@@ -91,9 +91,9 @@ const Signup: React.FC<Props> = ({ navigation }) => {
                 textContentType: 'telephoneNumber'
               }}
             />
-          </Grid>
+          </Spacer>
 
-          <Grid spacing={1}>
+          <Spacer spacing={1}>
             <TextField
               name="email"
               label={t('screens.signup.email')}
@@ -102,32 +102,32 @@ const Signup: React.FC<Props> = ({ navigation }) => {
                 textContentType: 'emailAddress'
               }}
             />
-          </Grid>
+          </Spacer>
 
-          <Grid spacing={1}>
+          <Spacer spacing={1}>
             <PasswordField
               name="password"
               label={t('screens.signup.password')}
               control={control}
             />
-          </Grid>
+          </Spacer>
 
-          <Grid spacing={1}>
+          <Spacer spacing={1}>
             <PasswordField
               name="passwordConfirm"
               label={t('screens.signup.passwordConfirm')}
               control={control}
             />
-          </Grid>
+          </Spacer>
 
-          <Grid spacing={1}>
+          <Spacer spacing={2}>
             <Button
               title={t('buttons.submit')}
               variant="accent"
               loading={formState.isSubmitting}
               onPress={handleSubmit(onSubmit)}
             />
-          </Grid>
+          </Spacer>
         </ContainerCentered>
       </FadeInView>
     </ScrollableView>

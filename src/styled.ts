@@ -40,7 +40,7 @@ export const Label = styled.Text({
   fontSize: 20
 })
 
-export const Grid = styled.View(
+export const Spacer = styled.View(
   ({
     spacing,
     style = {}

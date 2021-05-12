@@ -11,7 +11,7 @@ import ScrollableView from '../components/ScrollableView'
 import TextField from '../components/TextField'
 import LocalizationContext from '../context/LocalizationContext'
 import useUserStore from '../stores/useUserStore'
-import { ContainerCentered, Grid, Title } from '../styled'
+import { ContainerCentered, Spacer, Title } from '../styled'
 import { RootStackParamList } from '../types/navigation'
 
 type Props = StackScreenProps<RootStackParamList, 'Signin'>
@@ -47,7 +47,7 @@ const Signin: React.FC<Props> = () => {
         <ContainerCentered>
           <Title>{t('screens.signin.title')}</Title>
 
-          <Grid spacing={1}>
+          <Spacer spacing={1}>
             <TextField
               name="email"
               label={t('screens.signin.email')}
@@ -56,24 +56,24 @@ const Signin: React.FC<Props> = () => {
                 textContentType: 'emailAddress'
               }}
             />
-          </Grid>
+          </Spacer>
 
-          <Grid spacing={1}>
+          <Spacer spacing={1}>
             <PasswordField
               name="password"
               label={t('screens.signin.password')}
               control={control}
             />
-          </Grid>
+          </Spacer>
 
-          <Grid spacing={1}>
+          <Spacer spacing={2}>
             <Button
               title={t('buttons.submit')}
               variant="accent"
               loading={formState.isSubmitting}
               onPress={handleSubmit(onSubmit)}
             />
-          </Grid>
+          </Spacer>
         </ContainerCentered>
       </FadeInView>
     </ScrollableView>

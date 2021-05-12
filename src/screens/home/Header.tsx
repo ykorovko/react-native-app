@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 
 import LocalizationContext from '../../context/LocalizationContext'
-import { Grid } from '../../styled'
+import { Spacer } from '../../styled'
 import theme from '../../theme'
 
 const { Item } = SkeletonPlaceholder
@@ -18,9 +18,9 @@ const Header: React.FC<Props> = ({ loading, balance }) => {
 
   return (
     <View style={s.header}>
-      <Grid spacing={1}>
+      <Spacer spacing={1}>
         <Text style={s.label}>{t('screens.home.balance')}</Text>
-      </Grid>
+      </Spacer>
 
       {loading ? (
         <SkeletonPlaceholder>

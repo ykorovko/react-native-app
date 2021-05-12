@@ -10,7 +10,7 @@ import LanguageSwitcher from '../components/LanguageSwitcher'
 import ScrollableView from '../components/ScrollableView'
 import LocalizationContext from '../context/LocalizationContext'
 import useUserStore from '../stores/useUserStore'
-import { ContainerCentered, Grid, TextStyled, Title } from '../styled'
+import { ContainerCentered, Spacer, TextStyled, Title } from '../styled'
 import { RootStackParamList } from '../types/navigation'
 
 import LocalAuthModal from './root/LocalAuthModal'
@@ -54,20 +54,20 @@ const Root: React.FC<Props> = ({ navigation }) => {
             {t('screens.root.subtitle')}
           </TextStyled>
 
-          <Grid spacing={1}>
+          <Spacer spacing={1}>
             <Button
               title={t('screens.root.signin')}
               variant="contained"
               onPress={handleSignin}
             />
-          </Grid>
+          </Spacer>
 
-          <Grid spacing={1}>
+          <Spacer spacing={1}>
             <Button
               title={t('screens.root.signup')}
               onPress={() => navigation.push('Signup')}
             />
-          </Grid>
+          </Spacer>
         </ContainerCentered>
       </FadeInView>
 

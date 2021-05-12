@@ -7,7 +7,7 @@ import Button from '../components/Button'
 import TextField from '../components/TextField'
 import LocalizationContext from '../context/LocalizationContext'
 import useUserStore from '../stores/useUserStore'
-import { ContainerCentered, Grid, Title } from '../styled'
+import { ContainerCentered, Spacer, Title } from '../styled'
 
 type VerifyInput = {
   token: string
@@ -36,22 +36,22 @@ const Verify: React.FC = () => {
     <ContainerCentered>
       <Title>{t('screens.verify.title')}</Title>
 
-      <Grid spacing={1}>
+      <Spacer spacing={1}>
         <TextField
           name="token"
           label={t('screens.verify.code')}
           control={control}
         />
-      </Grid>
+      </Spacer>
 
-      <Grid spacing={1}>
+      <Spacer spacing={1}>
         <Button
           title={t('buttons.submit')}
           variant="accent"
           loading={formState.isSubmitting}
           onPress={handleSubmit(onSubmit)}
         />
-      </Grid>
+      </Spacer>
     </ContainerCentered>
   )
 }
