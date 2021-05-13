@@ -74,5 +74,13 @@ export default {
     TransactionsList: {
       noData: 'Нет данных'
     }
+  },
+
+  // Validations
+  validations: {
+    required: 'Обязательное поле',
+    email: 'Должен быть валидный email',
+    min6: 'Должно быть не менее 6 символов',
+    passwordsMatch: 'Пароли должны совпадать'
   }
 }

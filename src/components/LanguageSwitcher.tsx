@@ -12,6 +12,12 @@ const LanguageSwitcher: React.FC = () => {
 
   const { t, locale, setLocale } = React.useContext(LocalizationContext)
 
+  const changeLocale = React.useCallback(() => {
+    const newLocale = locale === 'ru' ? 'en' : 'ru'
+
+    setLocale(newLocale)
+  }, [locale])
+
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <TextStyled fontSize={22}>
@@ -25,7 +31,7 @@ const LanguageSwitcher: React.FC = () => {
           false: palette.borderColor,
           true: palette.borderColor
         }}
-        onValueChange={() => setLocale(locale === 'ru' ? 'en' : 'ru')}
+        onValueChange={changeLocale}
       />
 
       <TextStyled fontSize={22}>

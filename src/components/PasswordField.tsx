@@ -3,6 +3,7 @@ import { useController } from 'react-hook-form'
 import { StyleSheet, Text, TextInputProps } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import LocalizationContext from '../context/LocalizationContext'
 import theme from '../theme'
 
 import TextInput from './TextInput'
@@ -23,6 +24,8 @@ const PasswordField: React.FC<AllProps> = ({
   inputProps
 }) => {
   const [isSecure, setSecure] = React.useState(true)
+
+  const { t } = React.useContext(LocalizationContext)
 
   const {
     field,
@@ -61,7 +64,7 @@ const PasswordField: React.FC<AllProps> = ({
         }
       />
 
-      {error && <Text style={s.error}>{error.message}</Text>}
+      {error && <Text style={s.error}>{t(error.message)}</Text>}
     </>
   )
 }

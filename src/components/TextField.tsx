@@ -2,6 +2,7 @@ import React from 'react'
 import { useController } from 'react-hook-form'
 import { StyleSheet, Text, TextInputProps } from 'react-native'
 
+import LocalizationContext from '../context/LocalizationContext'
 import theme from '../theme'
 
 import TextInput from './TextInput'
@@ -30,6 +31,8 @@ const TextField: React.FC<AllProps> = ({
     defaultValue: ''
   })
 
+  const { t } = React.useContext(LocalizationContext)
+
   const error = errors[name]
 
   return (
@@ -43,7 +46,7 @@ const TextField: React.FC<AllProps> = ({
         inputProps={inputProps}
       />
 
-      {error && <Text style={s.error}>{error.message}</Text>}
+      {error && <Text style={s.error}>{t(error.message)}</Text>}
     </>
   )
 }

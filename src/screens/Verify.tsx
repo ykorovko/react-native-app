@@ -14,7 +14,7 @@ type VerifyInput = {
 }
 
 const schema = yup.object().shape({
-  token: yup.string().required('Required field')
+  token: yup.string().required('validations.required')
 })
 
 const Verify: React.FC = () => {

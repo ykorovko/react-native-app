@@ -18,14 +18,23 @@ import { RootStackParamList } from '../types/navigation'
 type Props = StackScreenProps<RootStackParamList, 'Signup'>
 
 const schema = yup.object().shape({
-  fullname: yup.string().min(6).required(),
-  phone: yup.string().required(),
-  email: yup.string().email().required(),
-  password: yup.string().min(6).required(),
+  fullname: yup
+    .string()
+    .min(6, 'validations.min6')
+    .required('validations.required'),
+  phone: yup.string().required('validations.required'),
+  email: yup
+    .string()
+    .email('validations.email')
+    .required('validations.required'),
+  password: yup
+    .string()
+    .min(6, 'validations.min6')
+    .required('validations.required'),
   passwordConfirm: yup
     .string()
-    .min(6)
-    .test('passwords-match', 'Passwords must match', function (value) {
+    .min(6, 'validations.min6')
+    .test('passwords-match', 'validations.passwordsMatch', function (value) {
       return this.parent.password === value
     })
 })

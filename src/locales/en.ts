@@ -74,5 +74,13 @@ export default {
     TransactionsList: {
       noData: 'No data'
     }
+  },
+
+  // Validations
+  validations: {
+    required: 'Required field',
+    email: 'Must be a valid email',
+    min6: 'Must be at least 6 characters',
+    passwordsMatch: 'Passwords must match'
   }
 }

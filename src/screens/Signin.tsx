@@ -22,8 +22,14 @@ type SigninInput = {
 }
 
 const schema = yup.object().shape({
-  email: yup.string().email().required(),
-  password: yup.string().min(6).required()
+  email: yup
+    .string()
+    .email('validations.email')
+    .required('validations.required'),
+  password: yup
+    .string()
+    .min(6, 'validations.min6')
+    .required('validations.required')
 })
 
 const Signin: React.FC<Props> = () => {
