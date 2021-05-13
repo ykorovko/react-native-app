@@ -81,7 +81,8 @@ const Signup: React.FC<Props> = ({ navigation }) => {
               label={t('screens.signup.phone')}
               control={control}
               inputProps={{
-                textContentType: 'telephoneNumber'
+                textContentType: 'telephoneNumber',
+                keyboardType: 'phone-pad'
               }}
             />
           </Spacer>
